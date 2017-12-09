@@ -1,4 +1,12 @@
-﻿// 对话框，消息提示框
+﻿(function(){ 
+    var _css = document.createElement("link");
+    _css.setAttribute("type", "text/css");
+    _css.setAttribute("rel", "stylesheet");
+    _css.setAttribute("href", "./css/utils.dialogs.css");
+    document.getElementsByTagName("head")[0].appendChild(_css);})(
+);
+
+// 对话框，消息提示框
 // utils.dialogs 
 // .MessageBox
 // .NoticeBox
@@ -105,36 +113,37 @@
                 options = options || {};
                 _jqFooter.empty();
                 var _primarySet = false;
+                var _button, _primary, _jqBtn;
                 if (options.first) {
-                    var _button = options.first;
+                    _button = options.first;
                     if (_button.text) {
-                        var _primary = _primarySet ? false : _button.primary;
-                        var _jqBtn = newButton(_button.text, _button.callback, _primary);
+                        _primary = _primarySet ? false : _button.primary;
+                        _jqBtn = newButton(_button.text, _button.callback, _primary);
                         _jqFooter.append(_jqBtn);
                         _primarySet = _button.primary === true;
                     }
                 }
                 if (options.second) {
-                    var _button = options.second;
+                    _button = options.second;
                     if (_button.text) {
-                        var _primary = _primarySet ? false : _button.primary;
-                        var _jqBtn = newButton(_button.text, _button.callback, _primary);
+                        _primary = _primarySet ? false : _button.primary;
+                        _jqBtn = newButton(_button.text, _button.callback, _primary);
                         _jqFooter.append(_jqBtn);
                         _primarySet = _button.primary === true;
                     }
                 }
                 if (options.third) {
-                    var _button = options.third;
+                    _button = options.third;
                     if (_button.text) {
-                        var _primary = _primarySet ? false : _button.primary;
-                        var _jqBtn = newButton(_button.text, _button.callback, _primary);
+                        _primary = _primarySet ? false : _button.primary;
+                        _jqBtn = newButton(_button.text, _button.callback, _primary);
                         _jqFooter.append(_jqBtn);
                         _primarySet = _button.primary === true;
                     }
                 }
                 initButtons();
                 return _this;
-            }
+            };
             //设置标题
             this.setTitle = function (title) {
                 _jqTitle.text(title);
@@ -144,24 +153,24 @@
             this.setMessage = function (msg) {
                 _jqContent.text(msg);
                 return _this;
-            }
+            };
             //html
             //html元素或jquery对象
             this.setHtml = function (html) {
                 _jqContent.empty();
                 _jqContent.append(_html);
-            }
+            };
             //options
             //
             this.show = function (options) {
                 _jqBox.fadeIn();
-            }
+            };
             this.hide = function (options) {
                 _jqBox.hide();
-            }
+            };
             this.remove = function () {
                 _jqBox.remove();
-            }
+            };
         }
 
         MessageBox.buttons = {
@@ -206,11 +215,11 @@
                 duration = duration || options.duration || 500;
                 timeout = timeout || options.timeout || 2000;
                 _jqBox.fadeIn(duration, function () { setTimeout(function () { _this.fadeRemove(); }, timeout); });
-            }
+            };
 
             this.fadeRemove = function () {
                 _jqBox.fadeOut(500, function () { _jqBox.remove(); });
-            }
+            };
         }
         NoticeBox.defaults = {
             notice: '',
@@ -236,10 +245,10 @@
             _jqMsg.text(options.message);
             this.visible = function () {
                 return _jqBox.is(":visible");
-            }
+            };
             this.hide = function () {
                 _jqBox.hide();
-            }
+            };
             this.show = function (timeout) {
                 _jqBox.show();
                 timeout = parseInt(timeout) || options.timeout;
@@ -250,16 +259,16 @@
                     }
                     _timeout = setTimeout(function () { _jqBox.hide(); _timeout = null; }, timeout);
                 }
-            }
+            };
             this.fadeOut = function (doration) {
                 _jqBox.fadeOut(doration);
-            }
+            };
             this.fadeIn = function (doration) {
                 _jqBox.fadeIn(duration);
             };
             this.setMessage = function (msg) {
                 _jqMsg.text(msg);
-            }
+            };
         }
         ProgressMessageBox.defaults = {
             timeout: 0,
@@ -311,7 +320,7 @@
                 }
                 setState(_pics.length, index);
                 return _this;
-            }
+            };
 
             this.next = function () {
                 if (_pics && _pics.length > 1) {
@@ -326,7 +335,7 @@
                     _target.show();
                     setState(_pics.length, _index);
                 }
-            }
+            };
 
             this.prep = function () {
                 if (_pics && _pics.length > 1) {
@@ -341,22 +350,22 @@
                     _target.show();
                     setState(_pics.length, _index);
                 }
-            }
+            };
 
             this.show = function () {
                 _jqBox.fadeIn();
                 return _this;
-            }
+            };
 
             this.hide = function () {
                 _jqBox.hide();
                 return _this;
-            }
+            };
 
             this.close = function () {
                 _jqBox.remove();
                 return _this;
-            }
+            };
 
             function setState(count, index) {
                 if (index < 1) {
@@ -377,7 +386,7 @@
         return PicViewer;
     })();
 
-    if (!$.utils.dialog) $.utils.dialogs = {};
+    if (!$.utils.dialogs) $.utils.dialogs = {};
     $.extend($.utils.dialogs,
         {
             MessageBox: _MessageBox,

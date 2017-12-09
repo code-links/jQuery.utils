@@ -1,0 +1,41 @@
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>
+        jQuery.utils测试
+    </title>
+    <style>
+    .container{
+        display:flex;
+        flex-direction:column;
+        align-items:center
+    }
+    .container button{
+        width: 100px;
+        padding: 10px 20px;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <button onclick="test()">测试</button>
+        <button onclick="reload()">重载</button>
+    </div>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="./js/utils.core.js"></script>
+    <script src="./js/utils.Regex.js?v=1"></script>
+    <script src="./js/utils.dialogs.js?v=2"></script>
+    <script>
+        function test() {
+            $.utils.dialogs.NoticeBox.show({notice:$.utils.Regex.isHttp("http://l.k.j.baidu.com/dff")});
+        }
+
+        function reload() {
+            window.location.reload();
+        }
+    </script>
+</body>
+
+</html>

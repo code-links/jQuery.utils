@@ -1,4 +1,5 @@
-﻿// utils.core 仅依赖jquery，如果引用此jquery之前未引用jquery，本js将自动引用最新版jquery
+﻿if(!$.utils) $.utils={};
+// utils.core 仅依赖jquery，如果引用此jquery之前未引用jquery，本js将自动引用最新版jquery
 // utils.core 是其他utils的核心库，引用其他utils将会自动引用utils.core
 // Date
 // .format
@@ -62,11 +63,11 @@
                 result = "" + parseInt(theTime2) + "小时" + result;
             }
             return result;
-        } 
+        };
     //将数字转为百分数
     Number.prototype.toPercent = function (fractionDigits) {
         return (this * 100.0).toFixed(fractionDigits) + '%';
-    }    
+    };
 })();
 
 // 表示全局唯一标识符 (GUID)
@@ -75,7 +76,7 @@
 (function ($) {
     var _Guid = (function () {
         function Guid(guidString) {
-            var arr = new Array(); //存放32位数值的数组
+            var arr = []; //存放32位数值的数组
             if (typeof (guidString) == "string") { //如果构造函数的参数为字符串
                 initByString(arr, guidString);
             }
@@ -99,7 +100,7 @@
                 else {
                     return false;
                 }
-            }
+            };
             // 返回 Guid 类的此实例值的 String 表示形式。
             this.toString = function (format) {
                 if (typeof (format) == "string") {
@@ -113,7 +114,7 @@
                 else {
                     return toStringWithFormat(arr, "D");
                 }
-            }
+            };
 
         }
         //由字符串加载
@@ -137,19 +138,20 @@
         P  括在圆括号中、由连字符分隔的 32 位数字：(xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx)
         */
         function toStringWithFormat(arr, format) {
+            var str;
             switch (format) {
                 case "N":
                     return arr.toString().replace(/,/g, "");
                 case "D":
-                    var str = arr.slice(0, 8) + "-" + arr.slice(8, 12) + "-" + arr.slice(12, 16) + "-" + arr.slice(16, 20) + "-" + arr.slice(20, 32);
+                    str = arr.slice(0, 8) + "-" + arr.slice(8, 12) + "-" + arr.slice(12, 16) + "-" + arr.slice(16, 20) + "-" + arr.slice(20, 32);
                     str = str.replace(/,/g, "");
                     return str;
                 case "B":
-                    var str = toStringWithFormat(arr, "D");
+                    str = toStringWithFormat(arr, "D");
                     str = "{" + str + "}";
                     return str;
                 case "P":
-                    var str = toStringWithFormat(arr, "D");
+                    str = toStringWithFormat(arr, "D");
                     str = "(" + str + ")";
                     return str;
                 default:
@@ -171,7 +173,7 @@
                 return true;
             }
             else { return false; }
-        }
+        };
         //判断一个对象是不是Guid字符串
         Guid.isGString = function (obj) {
             if (typeof obj == 'string') {
@@ -183,7 +185,7 @@
                 }
             }
             return false;
-        }
+        };
         return Guid;
     })();
     $.extend($.utils, { Guid: _Guid });
