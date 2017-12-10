@@ -1,4 +1,4 @@
-alert($.utils.Env.getCallingScript().fullName);
+
 (function($){
     var _URLARRAY = [
         '^((https|http|ftp|rtsp|mms)?://)', 
