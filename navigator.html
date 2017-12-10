@@ -1,0 +1,65 @@
+﻿<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <title>浏览器信息检测</title>
+    </head>
+    <body>
+        <table>
+            <thead>
+                <tr>
+                    <td>名称</td>
+                    <td>值</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="appName">
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr id="userAgent">
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr id="appCodeName">
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr id="appVersion">
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr id="appMinorVersion">
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr id="language">
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr id="gamepadInputEmulation">
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr id="cookieEnabled">
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr id="gamepadInputEmulation">
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        $("tbody tr").each(
+            function(){
+                var _jqThis = $(this);
+                var _key = _jqThis.attr("id");
+                _jqThis.children().eq(0).text(_key);
+                _jqThis.children().eq(1).text(window.navigator[_key]);
+            }
+        );
+    </script>
+</html>

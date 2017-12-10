@@ -1,4 +1,4 @@
-﻿if(!$.utils) $.utils={};
+﻿if (!$.utils) $.utils = {};
 // utils.core 仅依赖jquery，如果引用此jquery之前未引用jquery，本js将自动引用最新版jquery
 // utils.core 是其他utils的核心库，引用其他utils将会自动引用utils.core
 // Date
@@ -26,13 +26,13 @@
     // (new Date()).format("yyyy-M-d h:m:s.S")      ==> 2006-7-2 8:9:4.18  
     Date.prototype.format = function (fmt) {
         var o = {
-            "M+": this.getMonth() + 1,                 //月份   
-            "d+": this.getDate(),                    //日   
-            "h+": this.getHours(),                   //小时   
-            "m+": this.getMinutes(),                 //分   
-            "s+": this.getSeconds(),                 //秒   
+            "M+": this.getMonth() + 1, //月份   
+            "d+": this.getDate(), //日   
+            "h+": this.getHours(), //小时   
+            "m+": this.getMinutes(), //分   
+            "s+": this.getSeconds(), //秒   
             "q+": Math.floor((this.getMonth() + 3) / 3), //季度   
-            "S": this.getMilliseconds()             //毫秒   
+            "S": this.getMilliseconds() //毫秒   
         };
         if (/(y+)/.test(fmt))
             fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
@@ -42,28 +42,28 @@
         return fmt;
     };
     Date.formatSeconds = function (value) {
-            var theTime = parseInt(value);// 秒 
-            var theTime1 = 0;// 分 
-            var theTime2 = 0;// 小时 
-            // alert(theTime); 
-            if (theTime > 60) {
-                theTime1 = parseInt(theTime / 60);//m
-                theTime = parseInt(theTime % 60);//s
-                // alert(theTime1+"-"+theTime); 
-                if (theTime1 > 60) {
-                    theTime2 = parseInt(theTime1 / 60);//h
-                    theTime1 = parseInt(theTime1 % 60);//m
-                }
+        var theTime = parseInt(value); // 秒 
+        var theTime1 = 0; // 分 
+        var theTime2 = 0; // 小时 
+        // alert(theTime); 
+        if (theTime > 60) {
+            theTime1 = parseInt(theTime / 60); //m
+            theTime = parseInt(theTime % 60); //s
+            // alert(theTime1+"-"+theTime); 
+            if (theTime1 > 60) {
+                theTime2 = parseInt(theTime1 / 60); //h
+                theTime1 = parseInt(theTime1 % 60); //m
             }
-            var result = "" + parseInt(theTime) + "秒";
-            if (theTime1 > 0) {
-                result = "" + parseInt(theTime1) + "分" + result;
-            }
-            if (theTime2 > 0) {
-                result = "" + parseInt(theTime2) + "小时" + result;
-            }
-            return result;
-        };
+        }
+        var result = "" + parseInt(theTime) + "秒";
+        if (theTime1 > 0) {
+            result = "" + parseInt(theTime1) + "分" + result;
+        }
+        if (theTime2 > 0) {
+            result = "" + parseInt(theTime2) + "小时" + result;
+        }
+        return result;
+    };
     //将数字转为百分数
     Number.prototype.toPercent = function (fractionDigits) {
         return (this * 100.0).toFixed(fractionDigits) + '%';
@@ -79,43 +79,16 @@
             var arr = []; //存放32位数值的数组
             if (typeof (guidString) == "string") { //如果构造函数的参数为字符串
                 initByString(arr, guidString);
-            }
-            else if (guidString == null || guidString == undefined) {
+            } else if (guidString == null || guidString == undefined) {
                 guidString = "";
                 var i = 32;
                 while (i--) {
                     guidString += Math.floor(Math.random() * 16.0).toString(16);
                 }
                 initByString(arr, guidString);
-            }
-            else {
+            } else {
                 throw '传入的参数必须为STRING、NULL、UNDEFINED';
             }
-
-            // 返回一个bool值，该值指示 Guid 的两个实例是否表示同一个值。
-            this.equals = function (o) {
-                if (o && Guid.is(o)) {
-                    return this.toString() == o.toString();
-                }
-                else {
-                    return false;
-                }
-            };
-            // 返回 Guid 类的此实例值的 String 表示形式。
-            this.toString = function (format) {
-                if (typeof (format) == "string") {
-                    if (format == "N" || format == "D" || format == "B" || format == "P") {
-                        return toStringWithFormat(arr, format);
-                    }
-                    else {
-                        return toStringWithFormat(arr, "D");
-                    }
-                }
-                else {
-                    return toStringWithFormat(arr, "D");
-                }
-            };
-
         }
         //由字符串加载
         function initByString(arr, g) {
@@ -123,8 +96,7 @@
             g = g.toLowerCase();
             if (g.length != 32 || g.search(/[^0-9,a-f]/i) != -1) {
                 throw '传入的Guid字符串不是合法的';
-            }
-            else {
+            } else {
                 for (var i = 0; i < g.length; i++) {
                     arr.push(g[i]);
                 }
@@ -158,6 +130,26 @@
                     return new Guid();
             }
         }
+        // 返回一个bool值，该值指示 Guid 的两个实例是否表示同一个值。
+        Guid.prototype.equals = function (o) {
+            if (o && Guid.is(o)) {
+                return this.toString() == o.toString();
+            } else {
+                return false;
+            }
+        };
+        // 返回 Guid 类的此实例值的 String 表示形式。
+        Guid.prototype.toString = function (format) {
+            if (typeof (format) == "string") {
+                if (format == "N" || format == "D" || format == "B" || format == "P") {
+                    return toStringWithFormat(arr, format);
+                } else {
+                    return toStringWithFormat(arr, "D");
+                }
+            } else {
+                return toStringWithFormat(arr, "D");
+            }
+        };
 
         //创建一个新的Guid
         Guid.new = function () {
@@ -171,8 +163,9 @@
         Guid.is = function (obj) {
             if (typeof obj == 'object' && obj instanceof Guid) {
                 return true;
+            } else {
+                return false;
             }
-            else { return false; }
         };
         //判断一个对象是不是Guid字符串
         Guid.isGString = function (obj) {
@@ -188,5 +181,213 @@
         };
         return Guid;
     })();
-    $.extend($.utils, { Guid: _Guid });
+    $.extend($.utils, {
+        Guid: _Guid
+    });
+})(jQuery);
+
+// Path
+(function($){
+    function Path(){}
+    Path.getFileName = function(path){
+        if(typeof path == typeof ""){
+            var _index = path.lastIndexOf("/");
+            if(_index == -1){
+                return "";
+            }
+            else{
+                var _name = path.substr(_index + 1);
+                _index = _name.indexOf("?");
+                if(_index > -1){
+                    return _name.substr(0, _index);
+                }
+                else{
+                    return _name;
+                }
+            }
+        }else{
+            return "";
+        }
+    };
+    Path.getDirectoryName =function(path){
+        if(typeof path == typeof ""){
+            path = path.trim();
+            var _index = path.lastIndexOf("/");
+            if(_index< 0)
+            {return path;}
+            else{
+                return path.substr(0, _index);
+            }
+        }
+        else{
+            return "";
+        }
+    };
+    Path.getRoot = function(path){
+        if(typeof path == typeof ""){
+            path = path.trim();
+            var _index = path.indexOf("/");
+            if(_index < 0){
+                return path;
+            }else{
+                return path.substr(0, _index);
+            }
+        }else{
+            return "";
+        }
+    };
+    $.extend($.utils, {Path : Path});
+})(jQuery);
+
+// Environment
+(function ($) {
+    var _e = function () {};
+    var _regVer =".*?([\d.]+)";
+    _e.isDesktop = function () {
+        return !_e.isMobile();
+    };
+    _e.isMobile = function () {
+        return _e.isAndroid() || _e.isIos();
+    };
+    _e.isWindows = function () {
+        return (navigator.platform == "Win32") || (navigator.platform == "Windows");
+    };
+    _e.isMac = function(){
+       return (navigator.platform == "Mac68K") || (navigator.platform == "MacPPC") || (navigator.platform == "Macintosh") || (navigator.platform == "MacIntel");
+    };
+    _e.isLinux = function(){
+        return  (String(navigator.platform).indexOf("Linux") > -1);
+    };
+    _e.isAndroid = function () {
+        return window.navigator.userAgent.indexOf('Android') > -1 || window.navigator.userAgent.indexOf('Adr') > -1;
+    };
+    _e.isIos = function () {
+        return !!window.navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+    };
+    _e.isWebkit = function(){
+        return u.indexOf('AppleWebKit') > -1;
+    };
+    _e.isIphone = function(){
+        return window.navigator.userAgent.indexOf('iPhone') > -1;
+    };
+    _e.isIpad = function(){
+        return window.navigator.userAgent.indexOf('iPad') > -1;
+    };
+    _e.isEdge=function(){
+        return window.navigator.userAgent.indexOf('Edge') > -1;
+    };
+    _e.isChrome = function () {
+        return window.navigator.userAgent.indexOf("Chrome") !== -1 && !_e.isEdge() && !_e.isOpera();
+    };
+    _e.isFireFox = function () {
+        return window.navigator.userAgent.indexOf("Firefox") !== -1;
+    };
+    _e.isIe = function () {
+        return window.navigator.userAgent.indexOf("MSIE") > -1 || !!window.ActiveXObject || "ActiveXObject" in window;
+    };
+    _e.isSafari = function () {
+        return window.navigator.userAgent.indexOf("Safari") !== -1 && !_e.isChrome() && !_e.isEdge();
+    };
+    _e.isOpera = function () {
+        return window.navigator.userAgent.indexOf("Opera") !== -1 || window.navigator.userAgent.indexOf("OPR") !== -1;
+    };
+    _e.isWechat = function () {
+        return window.navigator.userAgent.toLowerCase().match(/MicroMessenger/i) == "micromessenger";
+    };
+    _e.getBrowserVersion = function () {
+        if(_e.isEdge()){
+            return window.navigator.userAgent.match(/edge\/([\d.]+)/i)[1];
+        }
+        else if(_e.isChrome()){
+            return window.navigator.userAgent.match(/chrome\/([\d.]+)/i)[1];
+        }
+        else if (_e.isFireFox()){
+            return window.navigator.userAgent.match(/firefox\/([\d.]+)/i)[1];
+        }
+        else if(_e.isIe()){
+            if(window.navigator.userAgent.indexOf("MSIE") > -1){
+                return window.navigator.userAgent.match(/msie([\d.]+)/i)[1];
+            }
+            else{
+                return window.navigator.userAgent.match(/rv\:([\d.]+)/i)[1];
+            }
+        }
+        else if(_e.isOpera()){
+            if(window.navigator.userAgent.indexOf("opera") > -1){
+                return window.navigator.userAgent.match(/opera\/([\d.]+)/i)[1];
+            }
+            else{
+                return window.navigator.userAgent.match(/opr\/([\d.]+)/i)[1];
+            }
+        }
+        else if(_e.isSafari()){
+            return window.navigator.userAgent.match(/safari\/([\d.]+)/i)[1];
+        }
+        else{
+            return window.navigator.appVersion;
+        }
+    };
+    _e.getCallingScript = function () {
+        var _p = "",
+            _dir = "";
+        if (_e.isChrome() || _e.isFireFox()) {
+            _p = document.currentScript.src;
+        } else if ((_e.isIe() && !_e.isLt(10)) ||
+            t.isSafari() ||
+            (t.isOpera() && !_e.isLt(10))) {
+            var a = {},
+                stack;
+            try {
+                a.b();
+            } catch (e) {
+                stack = e.stack || e.sourceURL || e.stacktrace;
+            }
+            var rExtractUri = /(?:http|https|file):\/\/.*?\/.+?.js/,
+                absPath = rExtractUri.exec(stack);
+            _p = absPath[0] || '';
+        } else if(_e.isIe() && _e.isLt(10)){
+            var _scripts = document.scripts;
+            var _isLt8 = ('' + document.querySelector).indexOf('[native code]') === -1;
+            for (var i = _scripts.length - 1, script; (script = _scripts[i--]); ) {
+                if (script.readyState === 'interative') {
+                    _p = _isLt8 ? script.getAttribute('src', 4) : script.src;
+                    break;
+                }
+            }
+        }
+        if (!_p) {
+            //如果是在文件中调用则会返回src
+            //若果在<script>标签中调用src一般为空
+            _p = document.getElementsByTagName('script')[document.getElementsByTagName('script').length -1].src;
+        }
+        if(_p){
+            _dir = $.utils.Path.getDirectoryName(_p);
+        }
+        return {
+            fullName:_p,
+            directory: _dir,
+            name: ""
+        };
+    };
+    //判断浏览器版本是否小于指定的版本，
+    //ver：1.0、2、59.1、11等，number类型
+    _e.isLt = function(ver){
+        if(typeof ver !== typeof 0)
+        {
+            throw "参数类型错误，ver必须为Number类型的正数";
+        }
+        else{
+            var _verb = _e.getBrowserVersion();
+            if(_verb){
+                return parseFloat(_verb) < ver;
+            }
+            else{
+                return false;
+            }
+        }
+    };
+    $.extend($.utils, {
+        Environment: _e,
+        Env: _e
+    });
 })(jQuery);
