@@ -1,10 +1,4 @@
-﻿(function(){ 
-    var _css = document.createElement("link");
-    _css.setAttribute("type", "text/css");
-    _css.setAttribute("rel", "stylesheet");
-    _css.setAttribute("href", "./css/utils.dialogs.css");
-    document.getElementsByTagName("head")[0].appendChild(_css);})(
-);
+﻿$.utils.Environment.initMe({css:true});
 
 // 对话框，消息提示框
 // utils.dialogs 
@@ -158,7 +152,8 @@
             //html元素或jquery对象
             this.setHtml = function (html) {
                 _jqContent.empty();
-                _jqContent.append(_html);
+                _jqContent.append(html);
+                return _this;
             };
             //options
             //

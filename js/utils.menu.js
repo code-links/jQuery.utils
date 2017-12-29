@@ -1,4 +1,6 @@
-﻿// 菜单
+﻿
+$.utils.Environment.initMe({ css: true });
+// 菜单
 // $.utils.menu
 // .ContextMenu
 (function ($) {

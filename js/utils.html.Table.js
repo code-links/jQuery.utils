@@ -1,4 +1,5 @@
-﻿// html
+﻿$.utils.Environment.initMe({ css: true });
+// html
 // $.utils.html
 // .Table
 (function ($) {

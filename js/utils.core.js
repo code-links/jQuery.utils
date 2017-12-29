@@ -89,6 +89,18 @@
             } else {
                 throw '传入的参数必须为STRING、NULL、UNDEFINED';
             }
+            // 返回 Guid 类的此实例值的 String 表示形式。
+            this.toString = function (format) {
+                if (typeof (format) == "string") {
+                    if (format == "N" || format == "D" || format == "B" || format == "P") {
+                        return toStringWithFormat(arr, format);
+                    } else {
+                        return toStringWithFormat(arr, "D");
+                    }
+                } else {
+                    return toStringWithFormat(arr, "D");
+                }
+            };
         }
         //由字符串加载
         function initByString(arr, g) {
@@ -136,18 +148,6 @@
                 return this.toString() == o.toString();
             } else {
                 return false;
-            }
-        };
-        // 返回 Guid 类的此实例值的 String 表示形式。
-        Guid.prototype.toString = function (format) {
-            if (typeof (format) == "string") {
-                if (format == "N" || format == "D" || format == "B" || format == "P") {
-                    return toStringWithFormat(arr, format);
-                } else {
-                    return toStringWithFormat(arr, "D");
-                }
-            } else {
-                return toStringWithFormat(arr, "D");
             }
         };
 
@@ -236,13 +236,36 @@
             return "";
         }
     };
+    Path.getFileNameWithoutExtension = function (path) {
+        var _name = Path.getFileName(path);
+        var _dot = _name.lastIndexOf(".");
+        if (_dot < 0) {
+            return path;
+        } else {
+            return _name.substr(0, _dot);
+        }
+    };
     $.extend($.utils, {Path : Path});
 })(jQuery);
 
 // Environment
 (function ($) {
     var _e = function () {};
-    var _regVer =".*?([\d.]+)";
+    var _regVer = ".*?([\d.]+)";
+    function _Script(fullName) {
+        this.fullName = fullName;
+        this.directory = $.utils.Path.getDirectoryName(fullName);
+        this.name = $.utils.Path.getFileName(fullName);
+    };
+    _Script.prototype.loadCss = function () {
+        var _this = this;
+        var _css = document.createElement("link");
+        var _cssPath = `${$.utils.Path.getDirectoryName(_this.directory)}/css/${$.utils.Path.getFileNameWithoutExtension(_this.fullName)}.css`;
+        _css.setAttribute("type", "text/css");
+        _css.setAttribute("rel", "stylesheet");
+        _css.setAttribute("href", _cssPath);
+        document.getElementsByTagName("head")[0].appendChild(_css);
+    };
     _e.isDesktop = function () {
         return !_e.isMobile();
     };
@@ -360,14 +383,7 @@
             //若果在<script>标签中调用src一般为空
             _p = document.getElementsByTagName('script')[document.getElementsByTagName('script').length -1].src;
         }
-        if(_p){
-            _dir = $.utils.Path.getDirectoryName(_p);
-        }
-        return {
-            fullName:_p,
-            directory: _dir,
-            name: ""
-        };
+        return new _Script( _p );
     };
     //判断浏览器版本是否小于指定的版本，
     //ver：1.0、2、59.1、11等，number类型
@@ -386,6 +402,14 @@
             }
         }
     };
+    //options{css:false,}
+    _e.initMe = function (options) {
+        options = options || {};
+        if (typeof options.css == typeof false && options.css) {
+            var _script = _e.getCallingScript();
+            _script.loadCss();
+        }
+    }
     $.extend($.utils, {
         Environment: _e,
         Env: _e
