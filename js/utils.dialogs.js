@@ -139,32 +139,47 @@
                 return _this;
             };
             //设置标题
-            this.setTitle = function (title) {
-                _jqTitle.text(title);
-                return _this;
+            this.title = function (title) {
+                if (arguments.length == 0) {
+                    return _jqTitle.text();
+                } else {
+                    _jqTitle.text(title);
+                    return _this;
+                }
             };
             //设置消息
-            this.setMessage = function (msg) {
-                _jqContent.text(msg);
-                return _this;
+            this.msg = function (msg) {
+                if (arguments.length == 0) {
+                    return _jqContent.text();
+                } else {
+                    _jqContent.text(msg);
+                    return _this;
+                }
             };
             //html
             //html元素或jquery对象
-            this.setHtml = function (html) {
-                _jqContent.empty();
-                _jqContent.append(html);
-                return _this;
+            this.html = function (html) {
+                if (arguments.length == 0) {
+                    return _jqContent.html();
+                } else {
+                    _jqContent.empty();
+                    _jqContent.append(html);
+                    return _this;
+                }
             };
             //options
             //
             this.show = function (options) {
                 _jqBox.fadeIn();
+                return _this;
             };
             this.hide = function (options) {
                 _jqBox.hide();
+                return _this;
             };
             this.remove = function () {
                 _jqBox.remove();
+                return _this;
             };
         }
 
@@ -210,10 +225,12 @@
                 duration = duration || options.duration || 500;
                 timeout = timeout || options.timeout || 2000;
                 _jqBox.fadeIn(duration, function () { setTimeout(function () { _this.fadeRemove(); }, timeout); });
+                return _this;
             };
 
             this.fadeRemove = function () {
                 _jqBox.fadeOut(500, function () { _jqBox.remove(); });
+                return _this;
             };
         }
         NoticeBox.defaults = {
@@ -243,26 +260,32 @@
             };
             this.hide = function () {
                 _jqBox.hide();
+                return _this;
             };
             this.show = function (timeout) {
                 _jqBox.show();
-                timeout = parseInt(timeout) || options.timeout;
-                if (timeout && timeout > 0) {
-                    if (_timeout) {
-                        clearTimeout(_timeout);
-                        _timeout = null;
-                    }
+                timeout = typeof timeout == typeof 0 ? parseInt(timeout) : options.timeout;
+                if (_timeout) {
+                    clearTimeout(_timeout);
+                    _timeout = null;
+                }
+                if (timeout > 0) {
                     _timeout = setTimeout(function () { _jqBox.hide(); _timeout = null; }, timeout);
                 }
+                return _this;
             };
             this.fadeOut = function (doration) {
                 _jqBox.fadeOut(doration);
+                return _this;
             };
             this.fadeIn = function (doration) {
                 _jqBox.fadeIn(duration);
+                return _this;
             };
-            this.setMessage = function (msg) {
+            this.msg = function (msg) {
                 _jqMsg.text(msg);
+                return _this;
+
             };
         }
         ProgressMessageBox.defaults = {
@@ -286,7 +309,7 @@
             var _jqPrep = _jqBox.find(".glyphicon-chevron-left");
             var _jqNext = _jqBox.find(".glyphicon-chevron-right");
             var _jqClose = _jqBox.find(".glyphicon-remove");
-            var _pics;
+            var _pics = [];
 
             _jqPrep.click(function () { _this.prep(); });
             _jqNext.click(function () { _this.next(); });
@@ -298,8 +321,7 @@
                     arrayUrls = [];
                 }
                 _pics = arrayUrls;
-                index = index || parseInt(index);
-                index = index || 0;
+                index = typeof index == typeof 0 ? parseInt(index) : 0;
                 if (index > _pics.length - 1) {
                     index = _pics.length - 1;
                 }
@@ -318,33 +340,31 @@
             };
 
             this.next = function () {
-                if (_pics && _pics.length > 1) {
-                    var _src = _jqPicbody.find("img").filter(":visible");
-                    var _index = _pics.indexOf(_src.attr("src"));
-                    if (_index == -1 || _index == _pics.length - 1) {
-                        return;
-                    }
-                    _index++;
-                    var _target = _jqPicbody.find("img").filter("[src='" + _pics[_index] + "']");
-                    _src.hide();
-                    _target.show();
-                    setState(_pics.length, _index);
+                var _src = _jqPicbody.find("img").filter(":visible");
+                var _index = _pics.indexOf(_src.attr("src"));
+                if (_index == -1 || _index == _pics.length - 1) {
+                    return;
                 }
+                _index++;
+                var _target = _jqPicbody.find("img").filter("[src='" + _pics[_index] + "']");
+                _src.hide();
+                _target.show();
+                setState(_pics.length, _index);
+                return _this;
             };
 
             this.prep = function () {
-                if (_pics && _pics.length > 1) {
-                    var _src = _jqPicbody.find("img").filter(":visible");
-                    var _index = _pics.indexOf(_src.attr("src"));
-                    if (_index == -1 || _index == 0) {
-                        return;
-                    }
-                    _index--;
-                    var _target = _jqPicbody.find("img").filter("[src='" + _pics[_index] + "']");
-                    _src.hide();
-                    _target.show();
-                    setState(_pics.length, _index);
+                var _src = _jqPicbody.find("img").filter(":visible");
+                var _index = _pics.indexOf(_src.attr("src"));
+                if (_index == -1 || _index == 0) {
+                    return;
                 }
+                _index--;
+                var _target = _jqPicbody.find("img").filter("[src='" + _pics[_index] + "']");
+                _src.hide();
+                _target.show();
+                setState(_pics.length, _index);
+                return _this;
             };
 
             this.show = function () {

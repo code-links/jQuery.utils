@@ -12,7 +12,6 @@
             left: 0,
             right: 0
         };
-
         var settings = $.extend({}, defaults, param);
 
         $(tables).each(function () {

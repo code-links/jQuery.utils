@@ -28,7 +28,11 @@ $.utils.Environment.initMe({ css: true });
             this.add = function (options) {
                 options = $.extend({ title: '菜单' + _this.count() }, _defMenuItem, options);
                 $("<li>", {
-                    text: options.title, class: "item", title: options.desc, "menu-id": options.menuid, click: function () {
+                    text: options.title,
+                    class: "item",
+                    title: options.desc,
+                    "menu-id": options.menuid,
+                    click: function () {
                         if (options.callback) {
                             options.callback(_srcElement);
                         }
@@ -50,7 +54,7 @@ $.utils.Environment.initMe({ css: true });
             this.popup = function popmenu(x, y, srcElement) {
                 _srcElement = srcElement;
                 _cmenuJq.css("left", x).css("top", y).fadeIn();
-                return false;
+                return _this;
             }
 
             this.hide = function () {
