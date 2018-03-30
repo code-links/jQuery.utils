@@ -6,7 +6,8 @@
         this.x = x;
         this.y = y;
     }
-    Point.bd2gcj = function (lng, lat) {
+    //百度02坐标转Gcj09坐标
+    Point.bd2Gcj = function (lng, lat) {
         var X_PI = Math.PI * 3000.0 / 180.0;
         var x = lng - 0.0065;
         var y = lat - 0.006;

@@ -12,27 +12,25 @@
 }
 
 .contextmenu .menu {
-        height: 100%;
-        width: 100%;
-        list-style: none;
-        width: 100px;
-        padding: 0;
-        margin: 0;
-    }
+    list-style: none;
+    min-width: 100px;
+    padding: 0;
+    margin: 0;
+}
 
 .contextmenu .menu .item {
-            margin: 0 0;
-            padding: 3px 5px;
-        }
+    margin: 0 0;
+    padding: 3px 5px;
+}
 
 .contextmenu .menu .item:hover {
-                background-color: lightblue;
-            }
+    background-color: lightblue;
+}
 
 .contextmenu .menu .separator {
-            margin: 0;
-            margin: 2px 5px;
-            border: none;
-            height: 1px;
-            background-color: #abacab;
-        }
+    margin: 0;
+    margin: 2px 5px;
+    border: none;
+    height: 1px;
+    background-color: #abacab;
+}
