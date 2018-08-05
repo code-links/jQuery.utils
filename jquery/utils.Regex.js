@@ -13,7 +13,7 @@
         '(/[0-9a-z_!~*\'().;?:@&=+$,%#-]+)+/?)$'
     ];
     var _URLCORE = ("\://(www.|[a-zA-Z].)[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,4}(\:[0-9]+)*(/($|[a-zA-Z0-9\.\,\;\?\'\\\+&%\$#\=~_\-]+))*$");
-    var _URL = new RegExp(_URLARRAY.jo  in(''));
+    var _URL = new RegExp(_URLARRAY.join(''));
     var _HTTP = new RegExp("^http" + _URLCORE);
     var _HTTPS = new RegExp("^https" + _URLCORE);
     var _FTP = new RegExp("^ftp" + _URLCORE);
